@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUserApi } from "../store/actions/user.actions";
-const AddUser = () => {
+import { AddVehiculeApi } from "../store/actions/vehicule.actions";
+const AddVehicule = () => {
   const {
     register,
     handleSubmit,
@@ -13,43 +14,40 @@ const AddUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    dispatch(addUserApi(data));
+    dispatch(AddVehiculeApi(data));
     navigate(-1);
   };
-  // cin,
-  //     name,
-  //     lastName,
-  //     birthDate,
-  //     address,
-  //     civilState,
-  //     userName,
-  //     password,
-  //     numDriver,
-  //     categDriver,
-  //     phoneNumber,
-  //     role,
+  // immat,
+  // marque,
+  // model,
+  // color,
+  // buyingPrice,
+  // buyingDate,
+  // maxWeight,
+  // dispo,
+  // doorNumber,
+  // typeVehicule,
+  // nbTires,
   return (
     <div className="d-flex justify-content-center align-items-center flex-1">
       <div className="row w-100" style={{ width: "90%", marginTop: "2em" }}>
         <div className="col-auto " style={{ minWidth: "100% " }}>
           <div className="card card-primary">
             <div className="card-header">
-              <h3 className="card-title">Ajouter utilisateur</h3>
+              <h3 className="card-title">Ajouter Vehicule</h3>
             </div>
             {/* /.card-header */}
             {/* form start */}
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="card-body">
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">
-                    Carte identité Nationale
-                  </label>
+                  <label htmlFor="exampleInputEmail0">Immatriculation</label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    placeholder="Carte identité Nationale"
-                    {...register("cin", {
+                    placeholder="Immatriculation"
+                    {...register("immat", {
                       required: true,
                       pattern: {
                         value: /^[0-9]+$/,
@@ -58,166 +56,132 @@ const AddUser = () => {
                       minLength: 8,
                     })}
                   />
-                  {errors.cin && (
+                  {errors.immat && (
                     <span className="text-danger p-2">Champ invalide</span>
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">Nom</label>
+                  <label htmlFor="exampleInputEmail0">Marque</label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    placeholder="Nom"
-                    {...register("lastName", { required: true })}
+                    placeholder="Marque"
+                    {...register("marque", { required: true })}
                   />
-                  {errors.lastName && (
+                  {errors.marque && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">Prénom</label>
+                  <label htmlFor="exampleInputEmail0">Couleur</label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    placeholder="Prénom"
-                    {...register("name", { required: true })}
+                    placeholder="Couleur"
+                    {...register("color", { required: true })}
                   />
-                  {errors.name && (
+                  {errors.color && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">Login</label>
+                  <label htmlFor="exampleInputEmail0">Prix d'achat </label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    placeholder="Login"
-                    {...register("userName", { required: true })}
+                    placeholder="Prix d'achat"
+                    {...register("buyingPrice", { required: true })}
                   />
-                  {errors.userName && (
+                  {errors.buyingPrice && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">Numéro téléphone</label>
+                  <label htmlFor="exampleInputEmail0"> Date d'achat</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="exampleInputEmail0"
+                    placeholder="Date d'achat "
+                    {...register("buyingDate", { required: true })}
+                  />
+                  {errors.buyingDate && (
+                    <span className="text-danger p-2">Champ obligatoire</span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail0">Poids Maximale </label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    placeholder="Numéro Téléphon"
-                    {...register("phoneNumber", { required: true })}
+                    placeholder="Poids Maximale"
+                    {...register("maxWeight", { required: true })}
                   />
-                  {errors.phoneNumber && (
+                  {errors.maxWeight && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">Adresse</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleInputEmail0"
-                    placeholder="Adresse"
-                    {...register("address", { required: true })}
-                  />
-                  {errors.address && (
-                    <span className="text-danger p-2">Champ obligatoire</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="civil">Etat Civile</label>
+                  <label htmlFor="civil">Disponibilité </label>
                   <input
                     type="text"
                     className="form-control"
                     id="civil"
-                    placeholder="Etat Civile"
-                    {...register("civilState", { required: true })}
+                    placeholder="Disponibilité"
+                    {...register("dispo", { required: true })}
                   />
-                  {errors.civilState && (
+                  {errors.dispo && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Date de naissance</label>
+                  <label htmlFor="exampleInputEmail1"> Nombre de portes </label>
                   <input
-                    type="date"
+                    type="number"
                     className="form-control"
                     id="exampleInputEmail1"
-                    placeholder="Date de naissance"
-                    {...register("birthDate", { required: true })}
+                    placeholder="Nombre de portes "
+                    {...register("doorNumber", { required: true })}
                   />{" "}
-                  {errors.birthDate && (
+                  {errors.doorNumber && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="role">Role</label>
+                  <label htmlFor="role">Type vihécule </label>
                   <select
                     className="custom-select custom-select-md"
                     id="role"
-                    {...register("role", {
+                    {...register("typeVehicule", {
                       required: true,
-                      defaultValue: "CHAUFFEUR",
+                      defaultValue: "CAMION",
                     })}
                   >
-                    <option value="CHAUFFEUR">Chauffeur</option>
-                    <option value={"GESTIONNAIRE"}>Gestionnaire</option>
-                    <option value="CONTROLEUR">Controleur</option>
-                    <option value="DIRECTEUR">Directeur</option>
+                    <option value="VOITURE">Voiture</option>
+                    <option value="CAMION">Camion</option>
                   </select>
-                  {errors.role && (
+                  {errors.typeVehicule && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">
-                    Catégorie de permis
-                  </label>
+                  <label htmlFor="exampleInputEmail1">Nombre des roues</label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleInputEmail1"
-                    placeholder="Catégorie Permis"
-                    {...register("categDriver", { required: false })}
+                    placeholder="Nombre des roues"
+                    {...register("nbTires", { required: true })}
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Numero de permis</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Numéro Permis"
-                    {...register("numDriver", {
-                      required: false,
-                      pattern: {
-                        value: /^[0-9]+$/,
-                        message: "Please enter a number",
-                      },
-                    })}
-                  />
-                  {errors.numDriver && (
-                    <span className="text-danger p-2">Champ invalide</span>
-                  )}
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Mot de passe</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="exampleInputPassword1"
-                    placeholder="Password"
-                    {...register("password", { required: true })}
-                  />
-                  {errors.password && (
-                    <span className="text-danger p-2">Champ obligatoire</span>
-                  )}
-                </div>
+                {errors.nbTires && (
+                  <span className="text-danger p-2">Champ obligatoire</span>
+                )}
               </div>
               {/* /.card-body */}
               <div className="card-footer">
@@ -236,4 +200,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default AddVehicule;

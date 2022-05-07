@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUsersApi } from "../store/actions/user.actions";
 
-const UserList = () => {
+const VehiculeList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUsersApi());
@@ -11,17 +11,15 @@ const UserList = () => {
   const { list } = useSelector((state) => state.users);
   return (
     <div>
-      {/* Content Header (Page header) */}
-      <section className="content-header">{/* /.container-fluid */}</section>
-      {/* Main content */}
+      <section className="content-header"></section>
+
       <section className="content">
-        {/* Default box */}
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">Utilisateurs</h3>
+            <h3 className="card-title">Vehicule </h3>
             <div className="card-tools">
               {" "}
-              <Link type="button" className="btn btn-primary" to={"/users/add"}>
+              <Link type="button" className="btn btn-primary" to={"/vehicule/add"}>
                 Ajouter
               </Link>
             </div>
@@ -66,13 +64,10 @@ const UserList = () => {
               </tbody>
             </table>
           </div>
-          {/* /.card-body */}
         </div>
-        {/* /.card */}
       </section>
-      {/* /.content */}
     </div>
   );
 };
 
-export default UserList;
+export default VehiculeList;
