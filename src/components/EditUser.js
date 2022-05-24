@@ -1,39 +1,63 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { addUserApi } from "../store/actions/user.actions";
-const AddUser = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { updateUserApi } from "../store/actions/user.actions";
+//import { EditUserApi } from "../store/actions/user.actions";
+const EditUser = () => {
+  let params = useParams();
+  const [isDriver, setIsDriver] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
-  const [isDriver, setIsDriver] = useState(false);
-  let value = watch("role");
-
   const dispatch = useDispatch();
+  let value = watch("role");
   const navigate = useNavigate();
-  const onSubmit = (data) => {
-    dispatch(addUserApi(data));
-    navigate(-1);
-  };
+  const { list } = useSelector((state) => state.users);
   useMemo(() => {
     console.log("Value", value);
-    if (value === "CHAUFFEUR") {
+    if (value == "CHAUFFEUR") {
       setIsDriver(true);
     } else {
       setIsDriver(false);
     }
   }, [value]);
+  const getSelectedUser = () => {
+    if (list.length != 0) {
+      let selectedUser = list.find((elm) => elm._id == params.id);
+      console.log("Selected User", selectedUser);
+      setValue("lastName", selectedUser.lastName);
+      setValue("cin", selectedUser.cin);
+      setValue("name", selectedUser.name);
+      setValue("userName", selectedUser.userName);
+      setValue("birthDate", selectedUser.birthDate);
+      setValue("phoneNumber", selectedUser.phoneNumber);
+      setValue("address", selectedUser.address);
+      setValue("civilState", selectedUser.civilState);
+      setValue("categDriver", selectedUser.categDriver);
+      setValue("numDriver", selectedUser.numDriver);
+      setValue("role", selectedUser.role);
+    }
+  };
+  const onSubmit = (data) => {
+    dispatch(updateUserApi(params.id, data));
+    navigate(-1);
+  };
+  useEffect(() => {
+    console.log("Params", params.id);
+    getSelectedUser();
+  }, [params]);
   return (
     <div className="d-flex justify-content-center align-items-center flex-1">
       <div className="row w-100" style={{ width: "90%", marginTop: "2em" }}>
         <div className="col-auto " style={{ minWidth: "100% " }}>
           <div className="card card-primary">
             <div className="card-header">
-              <h3 className="card-title">Ajouter utilisateur</h3>
+              <h3 className="card-title">Modifier utilisateur</h3>
             </div>
             {/* /.card-header */}
             {/* form start */}
@@ -94,18 +118,10 @@ const AddUser = () => {
                     className="form-control"
                     id="exampleInputEmail0"
                     placeholder="Login"
-                    {...register("userName", {
-                      required: true,
-                      pattern: {
-                        value:
-                          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                      },
-                    })}
+                    {...register("userName", { required: true })}
                   />
                   {errors.userName && (
-                    <span className="text-danger p-2">
-                      Champ obligatoire ou Invalide
-                    </span>
+                    <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
                 <div className="form-group">
@@ -114,16 +130,8 @@ const AddUser = () => {
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    placeholder="Numéro Téléphone"
-                    {...register("phoneNumber", {
-                      required: true,
-                      pattern: {
-                        value: /^[0-9]+$/,
-                        message: "Please enter a number",
-                      },
-                      minLength: 8,
-                      maxLength: 8,
-                    })}
+                    placeholder="Numéro Téléphon"
+                    {...register("phoneNumber", { required: true })}
                   />
                   {errors.phoneNumber && (
                     <span className="text-danger p-2">Champ obligatoire</span>
@@ -144,21 +152,16 @@ const AddUser = () => {
                 </div>
                 <div className="form-group">
                   <label htmlFor="civil">Etat Civile</label>
-                  <select
-                    className="custom-select custom-select-md"
-                    id="etat"
-                    {...register("civilState", {
-                      required: true,
-                      defaultValue: "Célibataire",
-                    })}
-                  >
-                    <option value={""} disabled selected>
-                      SELECTIONNER
-                    </option>
-                    <option value={"CELIBATAIRE"}>Célibataire</option>
-                    <option value="MARIEE">Mariée</option>
-                    <option value="DIVORCE">Divorcé</option>
-                  </select>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="civil"
+                    placeholder="Etat Civile"
+                    {...register("civilState", { required: true })}
+                  />
+                  {errors.civilState && (
+                    <span className="text-danger p-2">Champ obligatoire</span>
+                  )}
                 </div>
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail1">Date de naissance</label>
@@ -180,60 +183,54 @@ const AddUser = () => {
                     id="role"
                     {...register("role", {
                       required: true,
-                      defaultValue: "GESTIONNAIRE",
+                      defaultValue: "CHAUFFEUR",
                     })}
                   >
-                    <option value={""} disabled selected>
+                    <option value={""} disabled>
                       SELECTIONNER UNE ROLE
                     </option>
                     <option value="CHAUFFEUR">Chauffeur</option>
                     <option value={"GESTIONNAIRE"}>Gestionnaire</option>
                     <option value="CONTROLEUR">Controleur</option>
                     <option value="DIRECTEUR">Directeur</option>
-                    <option value="ADMIN">Admin</option>
                   </select>
                   {errors.role && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
 
-                {isDriver && (
-                  <>
-                    <div className="form-group">
-                      <label htmlFor="exampleInputEmail1">
-                        Catégorie de permis
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="exampleInputEmail1"
-                        placeholder="Catégorie Permis"
-                        {...register("categDriver", { required: false })}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="exampleInputEmail1">
-                        Numero de permis
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="exampleInputEmail1"
-                        placeholder="Numéro Permis"
-                        {...register("numDriver", {
-                          required: false,
-                          pattern: {
-                            value: /^[0-9]+$/,
-                            message: "Please enter a number",
-                          },
-                        })}
-                      />
-                      {errors.numDriver && (
-                        <span className="text-danger p-2">Champ invalide</span>
-                      )}
-                    </div>
-                  </>
-                )}
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">
+                    Catégorie de permis
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    placeholder="Catégorie Permis"
+                    {...register("categDriver", { required: false })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Numero de permis</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    placeholder="Numéro Permis"
+                    {...register("numDriver", {
+                      required: false,
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message: "Please enter a number",
+                      },
+                    })}
+                  />
+                  {errors.numDriver && (
+                    <span className="text-danger p-2">Champ invalide</span>
+                  )}
+                </div>
+
                 <div className="form-group">
                   <label htmlFor="exampleInputPassword1">Mot de passe</label>
                   <input
@@ -241,7 +238,7 @@ const AddUser = () => {
                     className="form-control"
                     id="exampleInputPassword1"
                     placeholder="Password"
-                    {...register("password", { required: true })}
+                    {...register("password", { required: false })}
                   />
                   {errors.password && (
                     <span className="text-danger p-2">Champ obligatoire</span>
@@ -271,4 +268,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default EditUser;

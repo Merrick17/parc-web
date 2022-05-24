@@ -24,18 +24,16 @@ const Login = () => {
         {/* /.login-logo */}
         <div className="card card-outline card-primary">
           <div className="card-header text-center">
-            <a href="../../index2.html" className="h1">
-              <b>Admin</b>LTE
-            </a>
+            <b>Bienvenue</b>
           </div>
           <div className="card-body">
-            <p className="login-box-msg">Sign in to start your session</p>
+            <p className="login-box-msg"> </p>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="input-group mb-3">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Email"
+                  placeholder="Nom utilisateur"
                   {...register("userName", { required: true })}
                 />
                 <div className="input-group-append">
@@ -51,7 +49,7 @@ const Login = () => {
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Password"
+                  placeholder="Mot de passe"
                   {...register("password", { required: true })}
                 />
                 <div className="input-group-append">
@@ -63,17 +61,25 @@ const Login = () => {
               {errors.password && (
                 <span className="text-danger">Champ obligatoire</span>
               )}
-              <div className="row mt-3">
+              <div
+                className="row mt-3"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 {/* /.col */}
-                <div className="col-4">
+                <div className="col-8 align-center">
                   <button
                     className="btn btn-primary btn-block"
                     type="submit"
+
                     // onClick={() => {
                     //   navigate("users");
                     // }}
                   >
-                    Sign In
+                    S'authentifier
                   </button>
                 </div>
                 {/* /.col */}
@@ -82,7 +88,9 @@ const Login = () => {
 
             {/* /.social-auth-links */}
             <p className="mb-1">
-              <a href="forgot-password.html">I forgot my password</a>
+              <a href="forgot-password.html">
+                avez-vous oublier votre mot de passe
+              </a>
             </p>
           </div>
           {/* /.card-body */}

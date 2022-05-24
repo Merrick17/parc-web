@@ -1,14 +1,31 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getUsersApi } from "../store/actions/user.actions";
-
+import { deleteUserApi, getUsersApi } from "../store/actions/user.actions";
+import Swal from "sweetalert2";
 const UserList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUsersApi());
   }, []);
   const { list } = useSelector((state) => state.users);
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Est ce que vous voulez supprimer cet utilisateur",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Confirmer",
+      denyButtonText: `Annuler`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        console.log("confirmer");
+        dispatch(deleteUserApi(id));
+      } else if (result.isDenied) {
+        console.log("Annuler");
+      }
+    });
+  };
   return (
     <div>
       {/* Content Header (Page header) */}
@@ -30,6 +47,7 @@ const UserList = () => {
             <table className="table table-striped projects">
               <thead>
                 <tr>
+                  <th style={{ width: "1%" }}>ID</th>
                   <th style={{ width: "1%" }}>CIN</th>
                   <th style={{ width: "20%" }}>Nom & Prénom</th>
                   <th>Adresse</th>
@@ -39,8 +57,9 @@ const UserList = () => {
                 </tr>
               </thead>
               <tbody>
-                {list.map((elm) => (
+                {list.map((elm, ind) => (
                   <tr>
+                    <td>{ind + 1}</td>
                     <td>{elm.cin}</td>
                     <td>
                       <a>
@@ -52,13 +71,19 @@ const UserList = () => {
                     <td>{elm.phoneNumber}</td>
                     <td className="project-state">{elm.role}</td>
                     <td className="project-actions text-right">
-                      <button className="btn btn-info btn-sm mr-2 ">
+                      <Link
+                        className="btn btn-info btn-sm mr-2 "
+                        to={`/users/edit/${elm._id}`}
+                      >
                         <i className="fas fa-pencil-alt"></i>
-                        Modifier
-                      </button>
-                      <button className="btn btn-danger btn-sm">
+                      </Link>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => {
+                          handleDelete(elm._id);
+                        }}
+                      >
                         <i className="fas fa-trash"></i>
-                        Supprimer
                       </button>
                     </td>
                   </tr>

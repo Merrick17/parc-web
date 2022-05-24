@@ -1,4 +1,4 @@
-import { getApi, postApi } from "../../utils/apiHelpers";
+import { deleteApi, getApi, postApi, updateApi } from "../../utils/apiHelpers";
 import { GET_USER_LIST, GET_USER_LIST_SUCCESS } from "./actionTypes";
 
 const getAllUsers = () => {
@@ -31,6 +31,35 @@ export const addUserApi = (data) => async (dispatch) => {
   try {
     let result = await postApi("user/register", data);
     if (result) {
+      dispatch(getUsersApi());
+    }
+  } catch (error) {}
+};
+export const deleteUserApi = (id) => async (dispatch) => {
+  try {
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        "access-token": token,
+      },
+    };
+    let result = await deleteApi(`user/delete/${id}`, config);
+    if (result) {
+      dispatch(getUsersApi());
+    }
+  } catch (error) {}
+};
+
+export const updateUserApi = (id, data) => async (dispatch) => {
+  try {
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        "access-token": token,
+      },
+    };
+    let result = await updateApi(`user/${id}`, data, config);
+    if (result.success) {
       dispatch(getUsersApi());
     }
   } catch (error) {}

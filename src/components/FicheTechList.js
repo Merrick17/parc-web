@@ -2,16 +2,34 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  deleteMissionApi,
-  getMissionApi,
-} from "../store/actions/mission.actions";
-
-const MissionList = () => {
+  getFicheTechsApi,
+  deleteFicheTechApi,
+} from "../store/actions/ficheTech.actions";
+import Swal from "sweetalert2";
+import moment from "moment";
+const FicheTechList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getMissionApi());
+    dispatch(getFicheTechsApi());
   }, []);
-  const { list } = useSelector((state) => state.missions);
+  const { list } = useSelector((state) => state.fichetech);
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Est ce que vous voulez supprimer cette fiche technique  ",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Confirmer",
+      denyButtonText: `Annuler`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        console.log("confirmer");
+        dispatch(deleteFicheTechApi(id));
+      } else if (result.isDenied) {
+        console.log("Annuler");
+      }
+    });
+  };
   return (
     <div>
       <section className="content-header"></section>
@@ -19,12 +37,13 @@ const MissionList = () => {
       <section className="content">
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">Mission </h3>
+            <h3 className="card-title">fiche contrôle technique</h3>
             <div className="card-tools">
+              {" "}
               <Link
                 type="button"
                 className="btn btn-primary"
-                to={"/mission/add"}
+                to={"/ficheTech/add"}
               >
                 Ajouter
               </Link>
@@ -34,34 +53,22 @@ const MissionList = () => {
             <table className="table table-striped projects">
               <thead>
                 <tr>
-                  <th style={{ width: "10%" }}>Id</th>
+                  <th style={{ width: "15%" }}>Id </th>
                   <th style={{ width: "20%" }}>Date</th>
-                  <th style={{ width: "20%" }}>nom de chauffeur</th>
-                  <th style={{ width: "20%" }}>Immatriculation </th>
-                  <th style={{ width: "20%" }}>Heure de départ</th>
-                  <th style={{ width: "20%" }}>Heure d'arrivé</th>
-                  <th style={{ width: "10%" }}>Destination</th>
-                  <th style={{ width: "30%" }}>Cause</th>
+
+                  <th style={{ width: "30%" }}>Véhicule </th>
+                  <th> Contenu</th>
+                  <th style={{ width: "30%" }}>Ajouter le </th>
                 </tr>
               </thead>
               <tbody>
                 {list.map((elm, ind) => (
                   <tr>
                     <td>{ind + 1}</td>
-                    <td>{elm.dateMission}</td>
-                    <td>
-                      <a>
-                        {elm.chauffeur.name} {elm.chauffeur.lastName}
-                      </a>
-                      <br />
-                    </td>
-                    <td>{elm.vehicule.immat}</td>
-                    <td>{elm.startTime}</td>
-                    <td>{elm.arrivalTime}</td>
-                    <td>{elm.destination}</td>
-                    <td>{elm.cause}</td>
-
-                    <td className="project-state">{elm.role}</td>
+                    <td>{elm.date}</td>
+                    <td>{elm.vehicule && elm.vehicule.immat}</td>
+                    <td>{elm.content}</td>
+                    <td>{moment(elm.createdAt).format("DD-MM-YYYY")}</td>
                     <td
                       className="project-actions text-right"
                       style={{
@@ -71,17 +78,17 @@ const MissionList = () => {
                     >
                       <Link
                         className="btn btn-info btn-sm mr-2 "
-                        to={`/misson/edit/${elm._id}`}
+                        to={`/ficheTech/edit/${elm._id}`}
                       >
                         <i className="fas fa-pencil-alt"></i>
                       </Link>
+
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => {
-                          dispatch(deleteMissionApi(elm._id));
+                          handleDelete(elm._id);
                         }}
                       >
-                        {" "}
                         <i className="fas fa-trash"></i>
                       </button>
                     </td>
@@ -96,4 +103,4 @@ const MissionList = () => {
   );
 };
 
-export default MissionList;
+export default FicheTechList;

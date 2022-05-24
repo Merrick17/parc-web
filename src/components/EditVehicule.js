@@ -1,39 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { AddVehiculeApi } from "../store/actions/vehicule.actions";
-const AddVehicule = () => {
+//import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { updateVehiculeApi } from "../store/actions/vehicule.actions";
+
+const EditVehicule = () => {
+  let params = useParams();
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
+  const { list } = useSelector((state) => state.vehicule);
+
+  const getSelectedVehicule = () => {
+    if (list.length != 0) {
+      let selectedVehicule = list.find((elm) => elm._id == params.id);
+      console.log("Selected Vehicule", selectedVehicule);
+      setValue("immat", selectedVehicule.immat);
+      setValue("marque", selectedVehicule.marque);
+      setValue("model", selectedVehicule.model);
+      setValue("color", selectedVehicule.color);
+      setValue("buyingPrice", selectedVehicule.buyingPrice);
+      setValue("buyingDate", selectedVehicule.buyingDate);
+      setValue("maxWeight", selectedVehicule.maxWeight);
+      setValue("dispo", selectedVehicule.dispo);
+      setValue("doorNumber", selectedVehicule.doorNumber);
+      setValue("typeVehicule", selectedVehicule.typeVehicule);
+      setValue("nbTires", selectedVehicule.nbTires);
+    }
+  };
   const onSubmit = (data) => {
-    dispatch(AddVehiculeApi(data));
+    dispatch(updateVehiculeApi(params.immat, data));
     navigate(-1);
   };
-  // immat,
-  // marque,
-  // model,
-  // color,
-  // buyingPrice,
-  // buyingDate,
-  // maxWeight,
-  // dispo,
-  // doorNumber,
-  // typeVehicule,
-  // nbTires,
+  useEffect(() => {
+    console.log("Params", params.immat);
+    getSelectedVehicule();
+  }, [params]);
   return (
     <div className="d-flex justify-content-center align-items-center flex-1">
       <div className="row w-100" style={{ width: "90%", marginTop: "2em" }}>
         <div className="col-auto " style={{ minWidth: "100% " }}>
           <div className="card card-primary">
             <div className="card-header">
-              <h3 className="card-title">Ajouter Vehicule</h3>
+              <h3 className="card-title">Modifier Vehicule</h3>
             </div>
             {/* /.card-header */}
             {/* form start */}
@@ -46,10 +63,8 @@ const AddVehicule = () => {
                     className="form-control"
                     id="exampleInputEmail0"
                     placeholder="Immatriculation"
-                    
                     {...register("immat", {
                       required: true,
-                     
                     })}
                   />
                   {errors.immat && (
@@ -167,6 +182,20 @@ const AddVehicule = () => {
                   )}
                 </div>
                 <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Nombre des roues</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    placeholder="Nombre des roues"
+                    {...register("nbTires", { required: true })}
+                  />
+               
+                {errors.nbTires && (
+                  <span className="text-danger p-2">Champ obligatoire</span>
+                )}
+              </div>
+                <div className="form-group">
                   <label htmlFor="role">Type vihécule </label>
                   <select
                     className="custom-select custom-select-md"
@@ -184,20 +213,7 @@ const AddVehicule = () => {
                   )}
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Nombre des roues</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Nombre des roues"
-                    {...register("nbTires", { required: true })}
-                  />
-                </div>
-                {errors.nbTires && (
-                  <span className="text-danger p-2">Champ obligatoire</span>
-                )}
-              </div>
+                </div> 
               {/* /.card-body */}
               <div className="card-footer">
                 <button type="submit" className="btn btn-primary mx-3">
@@ -208,7 +224,8 @@ const AddVehicule = () => {
                   className="btn btn-danger"
                   onClick={() => {
                     navigate(-1);
-                  }}>
+                  }}
+                >
                   Annuler
                 </button>
               </div>
@@ -220,4 +237,4 @@ const AddVehicule = () => {
   );
 };
 
-export default AddVehicule;
+export default EditVehicule;

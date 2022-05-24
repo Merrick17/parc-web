@@ -1,9 +1,4 @@
-import {
-  GET_VEHICULE_LIST,
-  GET_vehicule_LIST,
-  GET_VEHICULE_LIST_SUCCESS,
-  GET_vehicule_LIST_SUCCESS,
-} from "../actions/actionTypes";
+import {GET_VEHICULE_LIST, GET_VEHICULE_LIST_SUCCESS,} from "../actions/actionTypes";
 
 const vehiculeInitState = {
   loading: false,

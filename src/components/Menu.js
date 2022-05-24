@@ -1,9 +1,10 @@
 import React, { Component, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useMatch } from "react-router-dom";
+import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 import logo from "../assets/img/logo.png";
 const Menu = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.auth);
   useEffect(() => {}, []);
   return (
@@ -55,17 +56,19 @@ const Menu = () => {
                     <p>Tableau de bord</p>
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link
-                    to={"/users"}
-                    className={`nav-link ${
-                      location.pathname == "/users" ? "active" : ""
-                    } `}
-                  >
-                    <i className="far fa-circle nav-icon" />
-                    <p>Utilisateurs</p>
-                  </Link>
-                </li>
+                {userInfo && userInfo.role == "ADMIN" && (
+                  <li className="nav-item">
+                    <Link
+                      to={"/users"}
+                      className={`nav-link ${
+                        location.pathname == "/users" ? "active" : ""
+                      } `}
+                    >
+                      <i className="far fa-circle nav-icon" />
+                      <p>Utilisateurs</p>
+                    </Link>
+                  </li>
+                )}
                 <li className="nav-item">
                   <Link
                     to={"/vehicule"}
@@ -88,9 +91,54 @@ const Menu = () => {
                     <p>Mission</p>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link
+                    to={"/ficheTech"}
+                    className={`nav-link ${
+                      location.pathname == "/ficheTech" ? "active" : ""
+                    } `}
+                  >
+                    <i className="far fa-circle nav-icon" />
+                    <p>Fiches Techniques</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to={"/ficheDep"}
+                    className={`nav-link ${
+                      location.pathname == "/ficheDep" ? "active" : ""
+                    } `}
+                  >
+                    <li className="far fa-circle nav-icon" />
+                    <p>Fiche Dépenses</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to={"/Reclamation"}
+                    className={`nav-link ${
+                      location.pathname == "/Reclamation" ? "active" : ""
+                    } `}
+                  >
+                    <li className="far fa-circle nav-icon" />
+                    <p>
+                      Réclamations et <br />
+                      commentaires
+                    </p>
+                  </Link>
+                </li>
               </li>
             </ul>
           </nav>
+          <button
+            className="btn btn-primary ml-5"
+            onClick={() => {
+              localStorage.clear();
+              navigate("/");
+            }}
+          >
+            Deconnexion
+          </button>
         </div>
       </aside>
     </div>
