@@ -1,4 +1,8 @@
-import { LOGIN_USER, LOGIN_USER_SUCCESS } from "../actions/actionTypes";
+import {
+  LOGIN_USER,
+  LOGIN_USER_SUCCESS,
+  UPDATE_USER_INFO,
+} from "../actions/actionTypes";
 
 const authInitState = {
   token: localStorage.getItem("token") ? localStorage.getItem("token") : "",
@@ -20,6 +24,8 @@ const authReducer = (state = authInitState, action) => {
         token: payload.token,
         userInfo: payload.info,
       };
+    case UPDATE_USER_INFO:
+      return { ...state, userInfo: payload };
 
     default:
       return state;

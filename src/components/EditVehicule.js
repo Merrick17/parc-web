@@ -32,8 +32,9 @@ const EditVehicule = () => {
       setValue("maxWeight", selectedVehicule.maxWeight);
       setValue("dispo", selectedVehicule.dispo);
       setValue("doorNumber", selectedVehicule.doorNumber);
-      setValue("typeVehicule", selectedVehicule.typeVehicule);
       setValue("nbTires", selectedVehicule.nbTires);
+      setValue("typeVehicule", selectedVehicule.typeVehicule);
+    
     }
   };
   const onSubmit = (data) => {
@@ -182,19 +183,18 @@ const EditVehicule = () => {
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Nombre des roues</label>
+                  <label htmlFor="exampleInputEmail1"> Nombre des roues </label>
                   <input
                     type="number"
                     className="form-control"
                     id="exampleInputEmail1"
-                    placeholder="Nombre des roues"
+                    placeholder="Nombre des roues "
                     {...register("nbTires", { required: true })}
-                  />
-               
-                {errors.nbTires && (
-                  <span className="text-danger p-2">Champ obligatoire</span>
-                )}
-              </div>
+                  />{" "}
+                  {errors.nbTires && (
+                    <span className="text-danger p-2">Champ obligatoire</span>
+                  )}
+                </div>
                 <div className="form-group">
                   <label htmlFor="role">Type vihécule </label>
                   <select

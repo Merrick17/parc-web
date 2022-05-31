@@ -53,7 +53,7 @@ const FicheTechList = () => {
             <table className="table table-striped projects">
               <thead>
                 <tr>
-                  <th style={{ width: "15%" }}>Id </th>
+                  <th style={{ width: "15%" }}>N°</th>
                   <th style={{ width: "20%" }}>Date</th>
 
                   <th style={{ width: "30%" }}>Véhicule </th>

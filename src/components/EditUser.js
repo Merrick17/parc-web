@@ -112,28 +112,15 @@ const EditUser = () => {
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">Login</label>
+                  <label htmlFor="exampleInputEmail1">Date de naissance</label>
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
-                    id="exampleInputEmail0"
-                    placeholder="Login"
-                    {...register("userName", { required: true })}
-                  />
-                  {errors.userName && (
-                    <span className="text-danger p-2">Champ obligatoire</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">Numéro téléphone</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleInputEmail0"
-                    placeholder="Numéro Téléphon"
-                    {...register("phoneNumber", { required: true })}
-                  />
-                  {errors.phoneNumber && (
+                    id="exampleInputEmail1"
+                    placeholder="Date de naissance"
+                    {...register("birthDate", { required: true })}
+                  />{" "}
+                  {errors.birthDate && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
@@ -150,32 +137,46 @@ const EditUser = () => {
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
+
+                
+
+                
+
                 <div className="form-group">
-                  <label htmlFor="civil">Etat Civile</label>
+                  <label htmlFor="exampleInputEmail0">Numéro téléphone</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="civil"
-                    placeholder="Etat Civile"
-                    {...register("civilState", { required: true })}
+                    id="exampleInputEmail0"
+                    placeholder="Numéro Téléphon"
+                    {...register("phoneNumber", { required: true })}
                   />
-                  {errors.civilState && (
+                  {errors.phoneNumber && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
+                
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Date de naissance</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Date de naissance"
-                    {...register("birthDate", { required: true })}
-                  />{" "}
-                  {errors.birthDate && (
-                    <span className="text-danger p-2">Champ obligatoire</span>
-                  )}
+                  <label htmlFor="civil">Etat Civile</label>
+                  <select
+                    className="custom-select custom-select-md"
+                    id="etat"
+                    {...register("civilState", {
+                      required: true,
+                      defaultValue: "Célibataire",
+                    })}
+                  >
+                    <option value={""} disabled selected>
+                      Selectionner un état civile
+                    </option>
+                    <option value={"CELIBATAIRE"}>Célibataire</option>
+                    <option value="MARIEE">Marié(e)</option>
+                    <option value="DIVORCE">Divorcé(e)</option>
+                    <option value="VEUF">Veuf(ve)</option>
+                  </select>
                 </div>
+                
+                
                 <div className="form-group">
                   <label htmlFor="role">Role</label>
                   <select
@@ -183,51 +184,78 @@ const EditUser = () => {
                     id="role"
                     {...register("role", {
                       required: true,
-                      defaultValue: "CHAUFFEUR",
+                      defaultValue: "GESTIONNAIRE",
                     })}
                   >
                     <option value={""} disabled>
-                      SELECTIONNER UNE ROLE
+                      SELECTIONNER UN ROLE
                     </option>
                     <option value="CHAUFFEUR">Chauffeur</option>
                     <option value={"GESTIONNAIRE"}>Gestionnaire</option>
                     <option value="CONTROLEUR">Controleur</option>
                     <option value="DIRECTEUR">Directeur</option>
+                    <option value="ADMIN">Admin</option>
                   </select>
                   {errors.role && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
-
+                {isDriver && (
+                  <>
+                    <div className="form-group">
+                      <label htmlFor="exampleInputEmail1">
+                        Catégorie de permis
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="exampleInputEmail1"
+                        placeholder="Catégorie Permis"
+                        {...register("categDriver", { required: false })}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="exampleInputEmail1">
+                        Numero de permis
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="exampleInputEmail1"
+                        placeholder="Numéro Permis"
+                        {...register("numDriver", {
+                          required: false,
+                          pattern: {
+                            value: /^[0-9]+$/,
+                            message: "Please enter a number",
+                          },
+                        })}
+                      />
+                      {errors.numDriver && (
+                        <span className="text-danger p-2">Champ invalide</span>
+                      )}
+                    </div>
+                  </>
+                )}
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">
-                    Catégorie de permis
-                  </label>
+                  <label htmlFor="exampleInputEmail0">Nom d'utilisateur</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Catégorie Permis"
-                    {...register("categDriver", { required: false })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Numero de permis</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Numéro Permis"
-                    {...register("numDriver", {
-                      required: false,
+                    id="exampleInputEmail0"
+                    placeholder="Nom d'utilisateur"
+                    {...register("userName", {
+                      required: true,
                       pattern: {
-                        value: /^[0-9]+$/,
-                        message: "Please enter a number",
+                        value:
+                          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                       },
                     })}
                   />
-                  {errors.numDriver && (
-                    <span className="text-danger p-2">Champ invalide</span>
+                  {errors.userName && (
+                    <span className="text-danger p-2">
+                      Champ obligatoire ou Invalide
+                    </span>
                   )}
                 </div>
 
@@ -237,7 +265,7 @@ const EditUser = () => {
                     type="password"
                     className="form-control"
                     id="exampleInputPassword1"
-                    placeholder="Password"
+                    placeholder="Mot de passe"
                     {...register("password", { required: false })}
                   />
                   {errors.password && (

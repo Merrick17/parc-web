@@ -77,9 +77,9 @@ const Login = () => {
 
                     // onClick={() => {
                     //   navigate("users");
-                    // }}
+                    //  }}
                   >
-                    S'authentifier
+                    Se connecter
                   </button>
                 </div>
                 {/* /.col */}
@@ -89,7 +89,7 @@ const Login = () => {
             {/* /.social-auth-links */}
             <p className="mb-1">
               <a href="forgot-password.html">
-                avez-vous oublier votre mot de passe
+                mot de passe oublié ?
               </a>
             </p>
           </div>

@@ -23,7 +23,7 @@ export const loginUserApi = (body, navigate, addToast) => async (dispatch) => {
       dispatch(loginUserSuccess(token, user));
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-      navigate("users");
+      navigate("/users");
     } else {
       addToast("Adresse ou mot de passe incorrecte", { appearance: "error" });
     }

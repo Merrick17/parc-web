@@ -29,13 +29,17 @@ import EditReclamation from "./components/EditReclamation";
 import PrivateRoute from "./components/PrivateRoute";
 import EditFicheTech from "./components/EditFicheTech";
 import EditFicheDep from "./components/EditFicheDep";
+import Profile from "./components/Profile";
+import DriverList from "./components/DriverList";
+import AddDriver from "./components/AddDriver";
+import Home from "./views/Home";
 function App() {
   return (
     <div className="wrapper">
       <Routes>
-      <Route index element={<Login />} />
+        <Route index element={<Home />} />
+        <Route path="login" element={<Login />} />
         <Route path="/" element={<Layout />}>
-          
           <Route
             path="dashboard"
             element={
@@ -76,7 +80,6 @@ function App() {
             path="FicheTech"
             element={
               <PrivateRoute>
-                
                 <FicheTech />
               </PrivateRoute>
             }
@@ -84,7 +87,6 @@ function App() {
             <Route index element={<FicheTechList />} />
             <Route path="add" element={<AddFicheTech />} />
             <Route path="edit/:id" element={<EditFicheTech />} />
-
           </Route>
           <Route
             path="ficheDep"
@@ -96,8 +98,9 @@ function App() {
           >
             <Route index element={<FicheDepList />} />
             <Route path="add" element={<AddFicheDep />} />
-            <Route path="edit/:id" element={<EditFicheDep/>} />
+            <Route path="edit/:id" element={<EditFicheDep />} />
           </Route>
+          <Route path="profile" element={<Profile />} />
           <Route
             path="reclamation"
             element={
@@ -109,7 +112,18 @@ function App() {
             <Route index element={<ReclamationList />} />
             <Route path="add" element={<Addreclamation />} />
             <Route path="edit/:amani" element={<EditReclamation />} />
-
+          </Route>
+          <Route
+            path="DriverList"
+            element={
+              <PrivateRoute>
+                <Users/>
+              </PrivateRoute>
+            }
+          >
+            <Route index element={<DriverList />} />
+            <Route path="add" element={<AddDriver />} />
+            
           </Route>
         </Route>
       </Routes>

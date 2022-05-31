@@ -5,12 +5,30 @@ import {
   deleteMissionApi,
   getMissionApi,
 } from "../store/actions/mission.actions";
+import Swal from "sweetalert2";
 
 const MissionList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMissionApi());
   }, []);
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Est ce que vous voulez supprimer cette mission  ",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Confirmer",
+      denyButtonText: `Annuler`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        console.log("confirmer");
+        dispatch(deleteMissionApi(id));
+      } else if (result.isDenied) {
+        console.log("Annuler");
+      }
+    });
+  };
   const { list } = useSelector((state) => state.missions);
   return (
     <div>
@@ -34,7 +52,7 @@ const MissionList = () => {
             <table className="table table-striped projects">
               <thead>
                 <tr>
-                  <th style={{ width: "10%" }}>Id</th>
+                  <th style={{ width: "10%" }}>N°</th>
                   <th style={{ width: "20%" }}>Date</th>
                   <th style={{ width: "20%" }}>nom de chauffeur</th>
                   <th style={{ width: "20%" }}>Immatriculation </th>
@@ -78,10 +96,9 @@ const MissionList = () => {
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => {
-                          dispatch(deleteMissionApi(elm._id));
+                          handleDelete(elm._id);
                         }}
                       >
-                        {" "}
                         <i className="fas fa-trash"></i>
                       </button>
                     </td>

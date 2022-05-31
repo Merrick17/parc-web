@@ -1,4 +1,8 @@
-import { GET_USER_LIST, GET_USER_LIST_SUCCESS } from "../actions/actionTypes";
+import {
+  GET_USER_LIST,
+  GET_USER_LIST_SUCCESS,
+  UPDATE_USER_INFO,
+} from "../actions/actionTypes";
 
 const userInitState = {
   loading: false,
@@ -15,7 +19,7 @@ const userReducer = (state = userInitState, action) => {
       };
     case GET_USER_LIST_SUCCESS:
       return { ...state, loading: false, list: payload };
-
+   
     default:
       return state;
   }

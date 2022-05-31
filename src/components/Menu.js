@@ -2,6 +2,7 @@ import React, { Component, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 import logo from "../assets/img/logo.png";
+import { BASE_URL } from "../utils/apiHelpers";
 const Menu = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,7 +26,11 @@ const Menu = () => {
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
               <img
-                src="dist/img/user2-160x160.jpg"
+                src={
+                  userInfo.profilePic
+                    ? `${BASE_URL}/${userInfo.profilePic}`
+                    : "dist/img/user2-160x160.jpg"
+                }
                 className="img-circle elevation-2"
                 alt="User Image"
               />
@@ -69,64 +74,93 @@ const Menu = () => {
                     </Link>
                   </li>
                 )}
-                <li className="nav-item">
-                  <Link
-                    to={"/vehicule"}
-                    className={`nav-link ${
-                      location.pathname == "/vehicule" ? "active" : ""
-                    } `}
-                  >
-                    <i className="far fa-circle nav-icon" />
-                    <p>Véhicule</p>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    to={"/mission"}
-                    className={`nav-link ${
-                      location.pathname == "/mission" ? "active" : ""
-                    } `}
-                  >
-                    <i className="far fa-circle nav-icon" />
-                    <p>Mission</p>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    to={"/ficheTech"}
-                    className={`nav-link ${
-                      location.pathname == "/ficheTech" ? "active" : ""
-                    } `}
-                  >
-                    <i className="far fa-circle nav-icon" />
-                    <p>Fiches Techniques</p>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    to={"/ficheDep"}
-                    className={`nav-link ${
-                      location.pathname == "/ficheDep" ? "active" : ""
-                    } `}
-                  >
-                    <li className="far fa-circle nav-icon" />
-                    <p>Fiche Dépenses</p>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    to={"/Reclamation"}
-                    className={`nav-link ${
-                      location.pathname == "/Reclamation" ? "active" : ""
-                    } `}
-                  >
-                    <li className="far fa-circle nav-icon" />
-                    <p>
-                      Réclamations et <br />
-                      commentaires
-                    </p>
-                  </Link>
-                </li>
+                {userInfo && userInfo.role == "GESTIONNAIRE" && (
+                  <li className="nav-item">
+                    <Link
+                      to={"/users/chauffeur"}
+                      className={`nav-link ${
+                        location.pathname == "/users/chauffeur" ? "active" : ""
+                      } `}
+                    >
+                      <i className="far fa-circle nav-icon" />
+                      <p>Chauffeur</p>
+                    </Link>
+                  </li>
+                )}
+                {((userInfo && userInfo.role == "ADMIN") ||
+                  (userInfo && userInfo.role == "GESTIONNAIRE")) && (
+                  <li className="nav-item">
+                    <Link
+                      to={"/vehicule"}
+                      className={`nav-link ${
+                        location.pathname == "/vehicule" ? "active" : ""
+                      } `}
+                    >
+                      <i className="far fa-circle nav-icon" />
+                      <p>Véhicule</p>
+                    </Link>
+                  </li>
+                )}
+                {((userInfo && userInfo.role == "ADMIN") ||
+                  (userInfo && userInfo.role == "GESTIONNAIRE")) && (
+                  <li className="nav-item">
+                    <Link
+                      to={"/mission"}
+                      className={`nav-link ${
+                        location.pathname == "/mission" ? "active" : ""
+                      } `}
+                    >
+                      <i className="far fa-circle nav-icon" />
+                      <p>Mission</p>
+                    </Link>
+                  </li>
+                )}
+                {((userInfo && userInfo.role == "ADMIN") ||
+                  (userInfo && userInfo.role == "GESTIONNAIRE")) && (
+                  <li className="nav-item">
+                    <Link
+                      to={"/ficheTech"}
+                      className={`nav-link ${
+                        location.pathname == "/ficheTech" ? "active" : ""
+                      } `}
+                    >
+                      <i className="far fa-circle nav-icon" />
+                      <p>Fiches Techniques</p>
+                    </Link>
+                  </li>
+                )}
+                {((userInfo && userInfo.role == "ADMIN") ||
+                  (userInfo && userInfo.role == "GESTIONNAIRE")) && (
+                  <li className="nav-item">
+                    <Link
+                      to={"/ficheDep"}
+                      className={`nav-link ${
+                        location.pathname == "/ficheDep" ? "active" : ""
+                      } `}
+                    >
+                      <li className="far fa-circle nav-icon" />
+                      <p>Fiche Dépenses</p>
+                    </Link>
+                  </li>
+                )}
+
+                {((userInfo && userInfo.role == "ADMIN") ||
+                  (userInfo && userInfo.role == "CONTROLEUR")) && (
+                  <li className="nav-item">
+                    <Link
+                      to={"/Reclamation"}
+                      className={`nav-link ${
+                        location.pathname == "/Reclamation" ? "active" : ""
+                      } `}
+                    >
+                      <li className="far fa-circle nav-icon" />
+                      <p>
+                        Réclamations et <br />
+                        commentaires
+                      </p>
+                    </Link>
+                  </li>
+                )}
               </li>
             </ul>
           </nav>

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUserApi } from "../store/actions/user.actions";
-const AddUser = () => {
+const AddDriver = () => {
   const {
     register,
     handleSubmit,
@@ -33,7 +33,7 @@ const AddUser = () => {
         <div className="col-auto " style={{ minWidth: "100% " }}>
           <div className="card card-primary">
             <div className="card-header">
-              <h3 className="card-title">Ajouter utilisateur</h3>
+              <h3 className="card-title">Ajouter Chauffeur</h3>
             </div>
             {/* /.card-header */}
             {/* form start */}
@@ -41,13 +41,13 @@ const AddUser = () => {
               <div className="card-body">
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail0">
-                    Carte Identité Nationale
+                    Carte identité Nationale
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    placeholder="Carte Identité Nationale"
+                    placeholder="Carte identité Nationale"
                     {...register("cin", {
                       required: true,
                       pattern: {
@@ -88,29 +88,24 @@ const AddUser = () => {
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Date de naissance</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Date de naissance"
-                    {...register("birthDate", { required: true })}
-                  />{" "}
-                  {errors.birthDate && (
-                    <span className="text-danger p-2">Champ obligatoire</span>
-                  )}
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">Adresse</label>
+                  <label htmlFor="exampleInputEmail0">Login</label>
                   <input
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    placeholder="Adresse"
-                    {...register("address", { required: true })}
+                    placeholder="Login"
+                    {...register("userName", {
+                      required: true,
+                      pattern: {
+                        value:
+                          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      },
+                    })}
                   />
-                  {errors.address && (
-                    <span className="text-danger p-2">Champ obligatoire</span>
+                  {errors.userName && (
+                    <span className="text-danger p-2">
+                      Champ obligatoire ou Invalide
+                    </span>
                   )}
                 </div>
                 <div className="form-group">
@@ -134,8 +129,19 @@ const AddUser = () => {
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
-                
-                
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail0">Adresse</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="exampleInputEmail0"
+                    placeholder="Adresse"
+                    {...register("address", { required: true })}
+                  />
+                  {errors.address && (
+                    <span className="text-danger p-2">Champ obligatoire</span>
+                  )}
+                </div>
                 <div className="form-group">
                   <label htmlFor="civil">Etat Civile</label>
                   <select
@@ -147,97 +153,56 @@ const AddUser = () => {
                     })}
                   >
                     <option value={""} disabled selected>
-                      Selectionner un état civile
+                      SELECTIONNER
                     </option>
                     <option value={"CELIBATAIRE"}>Célibataire</option>
-                    <option value="MARIEE">Marié(e)</option>
-                    <option value="DIVORCE">Divorcé(e)</option>
-                    <option value="VEUF">Veuf(ve)</option>
+                    <option value="MARIEE">Mariée</option>
+                    <option value="DIVORCE">Divorcé</option>
                   </select>
                 </div>
-                
-               
-                
                 <div className="form-group">
-                  <label htmlFor="role">Role</label>
-                  <select
-                    className="custom-select custom-select-md"
-                    id="role"
-                    {...register("role", {
-                      required: true,
-                      defaultValue: "GESTIONNAIRE",
-                    })}
-                  >
-                    <option value={""} disabled selected>
-                      Selectionner un role
-                    </option>
-                    <option value="CHAUFFEUR">Chauffeur</option>
-                    <option value={"GESTIONNAIRE"}>Gestionnaire</option>
-                    <option value="CONTROLEUR">Controleur</option>
-                    <option value="DIRECTEUR">Directeur</option>
-                    <option value="ADMIN">Admin</option>
-                  </select>
-                  {errors.role && (
+                  <label htmlFor="exampleInputEmail1">Date de naissance</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    placeholder="Date de naissance"
+                    {...register("birthDate", { required: true })}
+                  />{" "}
+                  {errors.birthDate && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
 
-                {isDriver && (
-                  <>
-                    <div className="form-group">
-                      <label htmlFor="exampleInputEmail1">
-                        Catégorie de permis
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="exampleInputEmail1"
-                        placeholder="Catégorie Permis"
-                        {...register("categDriver", { required: false })}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="exampleInputEmail1">
-                        Numero de permis
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="exampleInputEmail1"
-                        placeholder="Numéro Permis"
-                        {...register("numDriver", {
-                          required: false,
-                          pattern: {
-                            value: /^[0-9]+$/,
-                            message: "Please enter a number",
-                          },
-                        })}
-                      />
-                      {errors.numDriver && (
-                        <span className="text-danger p-2">Champ invalide</span>
-                      )}
-                    </div>
-                  </>
-                )}
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail0">Nom d'utilisateur</label>
+                  <label htmlFor="exampleInputEmail1">
+                    Catégorie de permis
+                  </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="exampleInputEmail0"
-                    placeholder="Nom d'utilisateur"
-                    {...register("userName", {
-                      required: true,
+                    id="exampleInputEmail1"
+                    placeholder="Catégorie Permis"
+                    {...register("categDriver", { required: false })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Numero de permis</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    placeholder="Numéro Permis"
+                    {...register("numDriver", {
+                      required: false,
                       pattern: {
-                        value:
-                          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        value: /^[0-9]+$/,
+                        message: "Please enter a number",
                       },
                     })}
                   />
-                  {errors.userName && (
-                    <span className="text-danger p-2">
-                      Champ obligatoire ou Invalide
-                    </span>
+                  {errors.numDriver && (
+                    <span className="text-danger p-2">Champ invalide</span>
                   )}
                 </div>
 
@@ -247,7 +212,7 @@ const AddUser = () => {
                     type="password"
                     className="form-control"
                     id="exampleInputPassword1"
-                    placeholder="Mot de passe"
+                    placeholder="Password"
                     {...register("password", { required: true })}
                   />
                   {errors.password && (
@@ -278,4 +243,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default AddDriver;

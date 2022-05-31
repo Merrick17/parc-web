@@ -166,6 +166,20 @@ const AddVehicule = () => {
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
+
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1"> Nombre des roues </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    placeholder="Nombre de roues "
+                    {...register("nbTires", { required: true })}
+                  />{" "}
+                  {errors.nbTires && (
+                    <span className="text-danger p-2">Champ obligatoire</span>
+                  )}
+                </div>
                 <div className="form-group">
                   <label htmlFor="role">Type vihécule </label>
                   <select
@@ -183,21 +197,8 @@ const AddVehicule = () => {
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
-
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Nombre des roues</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    placeholder="Nombre des roues"
-                    {...register("nbTires", { required: true })}
-                  />
                 </div>
-                {errors.nbTires && (
-                  <span className="text-danger p-2">Champ obligatoire</span>
-                )}
-              </div>
+                
               {/* /.card-body */}
               <div className="card-footer">
                 <button type="submit" className="btn btn-primary mx-3">

@@ -54,10 +54,11 @@ const VehiculeList = () => {
             <table className="table table-striped projects">
               <thead>
                 <tr>
-                  <th style={{ width: "15%" }}>Id </th>
+                  <th style={{ width: "10%" }}>N°</th>
                   <th style={{ width: "15%" }}>Matricule </th>
+                  <th style={{ width: "10%" }}>Type </th>
                   <th style={{ width: "10%" }}>Marque</th>
-                  <th> couleur</th>
+                  
                   <th style={{ width: "30%" }}>Poids maximal </th>
                   <th className="text-center">Modele</th>
                 </tr>
@@ -67,8 +68,9 @@ const VehiculeList = () => {
                   <tr>
                     <td>{ind + 1}</td>
                     <td>{elm.immat}</td>
+                    <td>{elm.typeVehicule}</td>
                     <td>{elm.marque}</td>
-                    <td>{elm.color}</td>
+                    
                     <td>{elm.maxWeight}</td>
                     <td>{elm.model}</td>
 

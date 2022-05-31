@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteUserApi, getUsersApi } from "../store/actions/user.actions";
 import Swal from "sweetalert2";
-const UserList = () => {
+const DriverList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUsersApi());
@@ -35,10 +35,10 @@ const UserList = () => {
         {/* Default box */}
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title"> Liste des utilisateurs</h3>
+            <h3 className="card-title">Chauffeur</h3>
             <div className="card-tools">
               {" "}
-              <Link type="button" className="btn btn-primary" to={"/users/add"}>
+              <Link type="button" className="btn btn-primary" to={"/users/chauffeur/add"}>
                 Ajouter
               </Link>
             </div>
@@ -47,7 +47,7 @@ const UserList = () => {
             <table className="table table-striped projects">
               <thead>
                 <tr>
-                  <th style={{ width: "1%" }}>N°</th>
+                  <th style={{ width: "1%" }}>ID</th>
                   <th style={{ width: "1%" }}>CIN</th>
                   <th style={{ width: "20%" }}>Nom & Prénom</th>
                   <th>Adresse</th>
@@ -57,37 +57,39 @@ const UserList = () => {
                 </tr>
               </thead>
               <tbody>
-                {list.map((elm, ind) => (
-                  <tr>
-                    <td>{ind + 1}</td>
-                    <td>{elm.cin}</td>
-                    <td>
-                      <a>
-                        {elm.name} {elm.lastName}
-                      </a>
-                      <br />
-                    </td>
-                    <td>{elm.address}</td>
-                    <td>{elm.phoneNumber}</td>
-                    <td className="project-state">{elm.role}</td>
-                    <td className="project-actions text-right">
-                      <Link
-                        className="btn btn-info btn-sm mr-2 "
-                        to={`/users/edit/${elm._id}`}
-                      >
-                        <i className="fas fa-pencil-alt"></i>
-                      </Link>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => {
-                          handleDelete(elm._id);
-                        }}
-                      >
-                        <i className="fas fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {list
+                  .filter((elm) => elm.role == "CHAUFFEUR")
+                  .map((elm, ind) => (
+                    <tr>
+                      <td>{ind + 1}</td>
+                      <td>{elm.cin}</td>
+                      <td>
+                        <a>
+                          {elm.name} {elm.lastName}
+                        </a>
+                        <br />
+                      </td>
+                      <td>{elm.address}</td>
+                      <td>{elm.phoneNumber}</td>
+                      <td className="project-state">{elm.role}</td>
+                      <td className="project-actions text-right">
+                        <Link
+                          className="btn btn-info btn-sm mr-2 "
+                          to={`/users/edit/${elm._id}`}
+                        >
+                          <i className="fas fa-pencil-alt"></i>
+                        </Link>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => {
+                            handleDelete(elm._id);
+                          }}
+                        >
+                          <i className="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -100,4 +102,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default DriverList;

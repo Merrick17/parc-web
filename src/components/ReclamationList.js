@@ -12,6 +12,7 @@ const ReclamationList = () => {
     dispatch(getReclamationApi());
   }, []);
   const { list } = useSelector((state) => state.reclamation);
+  const { userInfo } = useSelector((state) => state.auth);
   const handleDelete = (id) => {
     Swal.fire({
       title: "Est ce que vous voulez supprimer cette reclamation ",
@@ -38,21 +39,23 @@ const ReclamationList = () => {
           <div className="card-header">
             <h3 className="card-title">Réclamation </h3>
             <div className="card-tools">
-              {" "}
-              <Link
-                type="button"
-                className="btn btn-primary"
-                to={"/reclamation/add"}
-              >
-                Ajouter
-              </Link>
+              {((userInfo && userInfo.role == "CONTROLEUR") ||
+                (userInfo && userInfo.role == "ADMIN")) && (
+                <Link
+                  type="button"
+                  className="btn btn-primary"
+                  to={"/reclamation/add"}
+                >
+                  Ajouter
+                </Link>
+              )}
             </div>
           </div>
           <div className="card-body p-0">
             <table className="table table-striped projects">
               <thead>
                 <tr>
-                  <th style={{ width: "15%" }}>Id </th>
+                  <th style={{ width: "15%" }}>N°</th>
                   <th style={{ width: "20%" }}>Date</th>
 
                   <th style={{ width: "30%" }}>Contenu</th>
@@ -72,20 +75,25 @@ const ReclamationList = () => {
                         justifyContent: "space-evenly",
                       }}
                     >
-                      <Link
-                        className="btn btn-info btn-sm mr-2 "
-                        to={`/reclamation/edit/${elm._id}`}
-                      >
-                        <i className="fas fa-pencil-alt"></i>
-                      </Link>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => {
-                          handleDelete(elm._id);
-                        }}
-                      >
-                        <i className="fas fa-trash"></i>
-                      </button>
+                      {((userInfo && userInfo.role == "CONTROLEUR") ||
+                        (userInfo && userInfo.role == "ADMIN")) && (
+                        <div>
+                          <Link
+                            className="btn btn-info btn-sm mr-2 "
+                            to={`/reclamation/edit/${elm._id}`}
+                          >
+                            <i className="fas fa-pencil-alt"></i>
+                          </Link>
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => {
+                              handleDelete(elm._id);
+                            }}
+                          >
+                            <i className="fas fa-trash"></i>
+                          </button>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}
