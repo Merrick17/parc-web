@@ -40,19 +40,19 @@ const AddFicheDep = () => {
             {/* form start */}
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="card-body">
-              <div className="form-group">
-                <label htmlFor="exampleInputEmail0"> Date </label>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="exampleInputEmail0"
-                  placeholder="Date"
-                  {...register("date", { required: true })}
-                />
-                {errors.date && (
-                  <span className="text-danger p-2">Champ obligatoire</span>
-                )}
-              </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail0"> Date </label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    id="exampleInputEmail0"
+                    placeholder="Date"
+                    {...register("date", { required: true })}
+                  />
+                  {errors.date && (
+                    <span className="text-danger p-2">Champ obligatoire</span>
+                  )}
+                </div>
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail0">TVS</label>
                   <input
@@ -107,6 +107,50 @@ const AddFicheDep = () => {
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
+                {/* <div className="form-group">
+                  <label>Plafond</label>
+                  <div className="d-flex justify-content-evenly">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        value={0}
+                        {...register("typePlafond")}
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Sous Plafond
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        value={1}
+                        {...register("typePlafond")}
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Plafond
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        value={2}
+                        {...register("typePlafond")}
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Sur Plafond
+                      </label>
+                    </div>
+                  </div>
+                </div> */}
                 <div className="form-group">
                   <label htmlFor="exampleInputEmail0">Carburant</label>
                   <input
@@ -144,7 +188,13 @@ const AddFicheDep = () => {
                 <button type="submit" className="btn btn-primary mx-3">
                   Confirmer
                 </button>
-                <button type="button" className="btn btn-danger">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                >
                   Annuler
                 </button>
               </div>

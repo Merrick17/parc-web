@@ -1,6 +1,6 @@
 import { deleteApi, getApi, postApi, updateApi } from "../../utils/apiHelpers";
 import { GET_VEHICULE_LIST, GET_VEHICULE_LIST_SUCCESS } from "./actionTypes";
-
+import { showNotification } from "@mantine/notifications";
 const getAllVehicules = () => {
   let action = {
     type: GET_VEHICULE_LIST,
@@ -27,6 +27,7 @@ export const getVehiculeApi = () => async (dispatch) => {
     console.log("Result", result);
     if (result.success) {
       dispatch(getAllVehiculeSuccess(result.vehicules));
+    
     }
   } catch (error) {}
 };
@@ -41,7 +42,20 @@ export const AddVehiculeApi = (data) => async (dispatch) => {
     let result = await postApi("vehicule/add", data, config);
     if (result) {
       dispatch(getVehiculeApi());
-    }
+      showNotification({
+        title:"Success",
+        message:"Véhicule ajoutée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
+      }
+    
+  
   } catch (error) {}
   
 };
@@ -56,6 +70,18 @@ export const deleteVehiculeApi = (immat) => async (dispatch) => {
     let result = await deleteApi(`vehicule/delete/${immat}`, config);
     if (result) {
       dispatch(getVehiculeApi());
+      showNotification({
+        title:"Success",
+        message:"Véhicule supprimée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
+      
     }
   } catch (error) {}
 };
@@ -71,7 +97,19 @@ export const updateVehiculeApi = (immat, data) => async (dispatch) => {
     let result = await updateApi(`vehicule/edit/${immat}`, data, config);
     if (result.success) {
       dispatch(getVehiculeApi());
-    }
+      showNotification({
+        title:"Success",
+        message:"Véhicule modifiée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
+      }
+    
   } catch (error) {}
 };
 

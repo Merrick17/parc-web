@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { loginUserApi } from "../store/actions/auth.actions";
 import { useToasts } from "react-toast-notifications";
+import Modal from "react-modal";
+import { sendEmail } from "../store/actions/user.actions";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+Modal.setAppElement("#root");
 const Login = () => {
   const navigate = useNavigate();
   const {
@@ -14,14 +27,70 @@ const Login = () => {
   } = useForm();
   const { addToast } = useToasts();
   const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
   const onSubmit = (data) => {
     console.log(data);
     dispatch(loginUserApi(data, navigate, addToast));
   };
+  const [modalIsOpen, setIsOpen] = useState(false);
   return (
     <div className="login-page">
+      <Modal
+        isOpen={modalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={() => {
+          setIsOpen(false);
+        }}
+        style={customStyles}
+        contentLabel="Reinitialiser Mot de passe"
+      >
+        <div
+          style={{
+            wdith: "100%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+          }}
+        >
+          <p>Saisir Votre Adresse Email</p>
+          <form className="form-inline">
+            <div className="form-group mx-sm-3 mb-2">
+              <label htmlFor="inputPassword2" className="sr-only">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="inputPassword2"
+                placeholder="Email"
+                value={email}
+                onChange={(ev) => {
+                  setEmail(ev.target.value);
+                }}
+              />
+            </div>
+            <button
+              onClick={() => {
+                dispatch(sendEmail(email));
+                setIsOpen(false);
+              }}
+              className="btn btn-primary mb-2 mx-2"
+            >
+              Envoyer
+            </button>
+            <button
+              onClick={() => {
+                setIsOpen(false);
+              }}
+              className="btn btn-danger mb-2"
+            >
+              Annuler
+            </button>
+          </form>
+        </div>
+      </Modal>
       <div className="login-box">
-        {/* /.login-logo */}
         <div className="card card-outline card-primary">
           <div className="card-header text-center">
             <b>Bienvenue</b>
@@ -88,7 +157,13 @@ const Login = () => {
 
             {/* /.social-auth-links */}
             <p className="mb-1">
-              <a href="forgot-password.html">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsOpen(true);
+                }}
+              >
                 mot de passe oublié ?
               </a>
             </p>

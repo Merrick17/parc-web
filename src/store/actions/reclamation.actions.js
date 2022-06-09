@@ -3,6 +3,7 @@ import {
   GET_RECLAMATION_LIST,
   GET_RECLAMATION_LIST_SUCCESS,
 } from "./actionTypes";
+import { showNotification } from "@mantine/notifications";
 
 const getAllReclamation = () => {
   let action = {
@@ -44,6 +45,18 @@ export const AddReclamationApi = (data) => async (dispatch) => {
     let result = await postApi("reclamation/add", data, config);
     if (result) {
       dispatch(getReclamationApi());
+      showNotification({
+        title:"Success",
+        message:"Reclamation ou conseil  ajoutée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
+
     }
   } catch (error) {}
 };
@@ -58,6 +71,17 @@ export const updateReclamationApi = (id, data) => async (dispatch) => {
     let result = await updateApi("reclamation/edit/" + id, data, config);
     if (result) {
       dispatch(getReclamationApi());
+      showNotification({
+        title:"Success",
+        message:"Reclamation ou conseil modifiée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
     }
   } catch (error) {}
 };
@@ -72,6 +96,17 @@ export const deleteReclamationApi = (id) => async (dispatch) => {
     let result = await deleteApi(`Reclamation/delete/${id}`, config);
     if (result) {
       dispatch(getReclamationApi());
+      showNotification({
+        title:"Success",
+        message:"reclamation ou conseil supprimée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
     }
   } catch (error) {}
 };

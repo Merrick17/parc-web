@@ -97,7 +97,7 @@ const Menu = () => {
                       } `}
                     >
                       <i className="far fa-circle nav-icon" />
-                      <p>Véhicule</p>
+                      <p>Véhicules</p>
                     </Link>
                   </li>
                 )}
@@ -111,7 +111,7 @@ const Menu = () => {
                       } `}
                     >
                       <i className="far fa-circle nav-icon" />
-                      <p>Mission</p>
+                      <p>Missions</p>
                     </Link>
                   </li>
                 )}
@@ -145,7 +145,8 @@ const Menu = () => {
                 )}
 
                 {((userInfo && userInfo.role == "ADMIN") ||
-                  (userInfo && userInfo.role == "CONTROLEUR")) && (
+                  (userInfo && userInfo.role == "CONTROLEUR") ||
+                  (userInfo && userInfo.role == "GESTIONNAIRE")) && (
                   <li className="nav-item">
                     <Link
                       to={"/Reclamation"}

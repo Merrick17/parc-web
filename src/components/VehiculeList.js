@@ -38,7 +38,7 @@ const VehiculeList = () => {
       <section className="content">
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">Vehicule</h3>
+            <h3 className="card-title">Véhicules</h3>
             <div className="card-tools">
               {" "}
               <Link
@@ -58,9 +58,10 @@ const VehiculeList = () => {
                   <th style={{ width: "15%" }}>Matricule </th>
                   <th style={{ width: "10%" }}>Type </th>
                   <th style={{ width: "10%" }}>Marque</th>
-                  
-                  <th style={{ width: "30%" }}>Poids maximal </th>
-                  <th className="text-center">Modele</th>
+                  <th style={{ width: "20%" }}>Poids maximal </th>
+                  <th className="text-center" style={{ width: "10%" }}>
+                    Modele
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -70,7 +71,6 @@ const VehiculeList = () => {
                     <td>{elm.immat}</td>
                     <td>{elm.typeVehicule}</td>
                     <td>{elm.marque}</td>
-                    
                     <td>{elm.maxWeight}</td>
                     <td>{elm.model}</td>
 

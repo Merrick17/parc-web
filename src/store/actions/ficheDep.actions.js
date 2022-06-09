@@ -1,6 +1,6 @@
 import { deleteApi, getApi, postApi, updateApi} from "../../utils/apiHelpers";
 import { GET_FICHEDEP_LIST, GET_FICHEDEP_LIST_SUCCESS } from "./actionTypes";
-
+import { showNotification } from "@mantine/notifications";
 const getAllFicheDep = () => {
   let action = {
     type: GET_FICHEDEP_LIST,
@@ -41,6 +41,17 @@ export const AddFicheDepApi = (data) => async (dispatch) => {
     let result = await postApi("depenses/add", data, config);
     if (result) {
       dispatch(getFicheDepApi());
+      showNotification({
+        title:"Success",
+        message:"Fiche Depense ajoutée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
     }
   } catch (error) {}
 };
@@ -55,6 +66,17 @@ export const updateFicheDepApi= (id, data) => async (dispatch) => {
     let result = await updateApi("depenses/edit/" + id, data, config);
     if (result) {
       dispatch(getFicheDepApi());
+      showNotification({
+        title:"Success",
+        message:"Fiche Depense modifiée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
     }
   } catch (error) {}
 };
@@ -69,6 +91,17 @@ export const deleteFicheDepApi = (id) => async (dispatch) => {
     let result = await deleteApi(`depenses/delete/${id}`, config);
     if (result) {
       dispatch(getFicheDepApi());
+      showNotification({
+        title:"Success",
+        message:"Fiche Dépense  supprimée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
     }
   } catch (error) {}
 };

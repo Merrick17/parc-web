@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   deleteMissionApi,
+  finishMission,
   getMissionApi,
 } from "../store/actions/mission.actions";
 import Swal from "sweetalert2";
@@ -12,6 +13,29 @@ const MissionList = () => {
   useEffect(() => {
     dispatch(getMissionApi());
   }, []);
+  const inputOptions = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        1: "Success",
+        0: "Echec",
+      });
+    }, 1000);
+  });
+
+  const handleTerminate = async (id) => {
+    const { value: ev } = await Swal.fire({
+      title: "Selectionner une evaluation",
+      input: "radio",
+      inputOptions: inputOptions,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to choose something!";
+        }
+      },
+    });
+    console.log(`you selected ${ev}`);
+    dispatch(finishMission({ evaluation: ev }, id));
+  };
   const handleDelete = (id) => {
     Swal.fire({
       title: "Est ce que vous voulez supprimer cette mission  ",
@@ -59,7 +83,8 @@ const MissionList = () => {
                   <th style={{ width: "20%" }}>Heure de départ</th>
                   <th style={{ width: "20%" }}>Heure d'arrivé</th>
                   <th style={{ width: "10%" }}>Destination</th>
-                  <th style={{ width: "30%" }}>Cause</th>
+                  <th style={{ width: "20%" }}>Cause</th>
+                  <th style={{ width: "20%" }}>Etat</th>
                 </tr>
               </thead>
               <tbody>
@@ -79,7 +104,20 @@ const MissionList = () => {
                     <td>{elm.destination}</td>
                     <td>{elm.cause}</td>
 
-                    <td className="project-state">{elm.role}</td>
+                    <td className="project-state">
+                      {elm.isFinished ? (
+                        "Terminer"
+                      ) : (
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => {
+                            handleTerminate(elm._id);
+                          }}
+                        >
+                          Terminer
+                        </button>
+                      )}
+                    </td>
                     <td
                       className="project-actions text-right"
                       style={{
@@ -89,7 +127,7 @@ const MissionList = () => {
                     >
                       <Link
                         className="btn btn-info btn-sm mr-2 "
-                        to={`/misson/edit/${elm._id}`}
+                        to={`/mission/edit/${elm._id}`}
                       >
                         <i className="fas fa-pencil-alt"></i>
                       </Link>

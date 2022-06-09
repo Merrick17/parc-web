@@ -18,6 +18,7 @@ const Profile = () => {
     formState: { errors },
   } = useForm();
   useEffect(() => {
+    console.log("USer Info",userInfo)
     setValue("cin", userInfo.cin);
     setValue("name", userInfo.name);
     setValue("lastName", userInfo.lastName);
@@ -26,13 +27,14 @@ const Profile = () => {
     setValue("userName", userInfo.userName);
     setValue(
       "birthDate",
-      moment(new moment(userInfo.birthDate, "DD-MM-YYYY").toDate()).format(
+      moment(new moment(userInfo.birthDate, "YYYY-MM-DD").toDate()).format(
         "YYYY-MM-DD"
       )
     );
     setValue("civilState", userInfo.civilState.toUpperCase());
   }, [userInfo]);
   const onSubmit = (data) => {
+    
     dispatch(updateUserApi(userInfo._id, data));
     //navigate(-1);
   };
@@ -112,6 +114,11 @@ const Profile = () => {
                             required: true,
                           })}
                         />
+                        {errors.userName && (
+                          <span className="text-danger p-2">
+                            Champ obligatoire ou Invalide
+                          </span>
+                        )}
                       </div>
                       <div className="mb-3">
                         <label className="small mb-1" htmlFor="inputUsername">
@@ -126,6 +133,11 @@ const Profile = () => {
                             required: true,
                           })}
                         />
+                        {errors.cin && (
+                          <span className="text-danger p-2">
+                            Champ obligatoire ou Invalide
+                          </span>
+                        )}
                       </div>
                       <div className="row gx-3 mb-3">
                         <div className="col-md-6">
@@ -145,6 +157,11 @@ const Profile = () => {
                               required: true,
                             })}
                           />
+                          {errors.name && (
+                            <span className="text-danger p-2">
+                              Champ obligatoire ou invalide{" "}
+                            </span>
+                          )}
                         </div>
                         <div className="col-md-6">
                           <label className="small mb-1" htmlFor="inputLastName">
@@ -157,6 +174,11 @@ const Profile = () => {
                             placeholder="Enter your last name"
                             {...register("lastName", { required: true })}
                           />
+                          {errors.lastName && (
+                            <span className="text-danger p-2">
+                              Champ obligatoire ou invalide{" "}
+                            </span>
+                          )}
                         </div>
                       </div>
                       <div className="row gx-3 mb-3">
@@ -176,6 +198,11 @@ const Profile = () => {
                             <option value={"MARIEE"}>Marié</option>
                             <option value={"DiVORCE"}>Divorcé</option>
                           </select>
+                          {errors.civilState && (
+                            <span className="text-danger p-2">
+                              Champ obligatoire ou invalide{" "}
+                            </span>
+                          )}
                         </div>
                         <div className="col-md-6">
                           <label className="small mb-1" htmlFor="inputLocation">
@@ -188,6 +215,11 @@ const Profile = () => {
                             placeholder="Adresse"
                             {...register("address", { required: true })}
                           />
+                          {errors.address && (
+                            <span className="text-danger p-2">
+                              Champ obligatoire ou invalide{" "}
+                            </span>
+                          )}
                         </div>
                       </div>
 
@@ -203,6 +235,11 @@ const Profile = () => {
                             placeholder="Numéro de télephone"
                             {...register("phoneNumber", { required: true })}
                           />
+                          {errors.phoneNumber && (
+                            <span className="text-danger p-2">
+                              Champ obligatoire ou invalide{" "}
+                            </span>
+                          )}
                         </div>
                         <div className="col-md-6">
                           <label className="small mb-1" htmlFor="inputBirthday">
@@ -214,6 +251,11 @@ const Profile = () => {
                             type="date"
                             {...register("birthDate", { required: true })}
                           />
+                          {errors.birthDate && (
+                            <span className="text-danger p-2">
+                              Champ obligatoire ou invalide{" "}
+                            </span>
+                          )}
                         </div>
                       </div>
                       <button className="btn btn-primary" type="submit">

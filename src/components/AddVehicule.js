@@ -46,10 +46,8 @@ const AddVehicule = () => {
                     className="form-control"
                     id="exampleInputEmail0"
                     placeholder="Immatriculation"
-                    
                     {...register("immat", {
                       required: true,
-                     
                     })}
                   />
                   {errors.immat && (
@@ -190,15 +188,17 @@ const AddVehicule = () => {
                       defaultValue: "CAMION",
                     })}
                   >
-                    <option value="VOITURE">Voiture</option>
-                    <option value="CAMION">Camion</option>
+                    <option value="VOITURE">Voiture de fonction</option>
+                    <option value="SEMI">Semi Remorque</option>
+                    <option value="POID_LOURD">Poids Lourd</option>
+                    <option value="PARTNER">Partner</option>
                   </select>
                   {errors.typeVehicule && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
-                </div>
-                
+              </div>
+
               {/* /.card-body */}
               <div className="card-footer">
                 <button type="submit" className="btn btn-primary mx-3">
@@ -209,7 +209,8 @@ const AddVehicule = () => {
                   className="btn btn-danger"
                   onClick={() => {
                     navigate(-1);
-                  }}>
+                  }}
+                >
                   Annuler
                 </button>
               </div>

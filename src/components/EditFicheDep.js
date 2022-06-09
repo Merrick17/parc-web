@@ -30,7 +30,8 @@ const EditFicheDep = () => {
       setValue("reparation", selectedFicheDep.reparation);
       setValue("coutAssurance", selectedFicheDep.coutAssurance);
       setValue("carburant", selectedFicheDep.carburant);
-      setValue("vehicule", selectedFicheDep.vehicule);
+      setValue("vehicule", selectedFicheDep.vehicule._id);
+      setValue("typePlafond", selectedFicheDep.typePlafond);
     }
   };
   const onSubmit = (data) => {
@@ -59,10 +60,10 @@ const EditFicheDep = () => {
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    placeholder="Contenu"
-                    {...register("contenu", { required: true })}
+                    placeholder="TVS"
+                    {...register("tvs", { required: true })}
                   />
-                  {errors.contenu && (
+                  {errors.tvs && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
@@ -120,6 +121,50 @@ const EditFicheDep = () => {
                   )}
                 </div>
                 <div className="form-group">
+                  <label>Plafond</label>
+                  <div className="d-flex justify-content-evenly">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        value={0}
+                        {...register("typePlafond")}
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Sous Plafond
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        value={1}
+                        {...register("typePlafond")}
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Plafond
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                        value={2}
+                        {...register("typePlafond")}
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Sur Plafond
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="form-group">
                   <label htmlFor="exampleInputEmail0">Carburant </label>
                   <input
                     type="text"
@@ -139,7 +184,7 @@ const EditFicheDep = () => {
                     type="text"
                     className="form-control"
                     id="exampleInputEmail0"
-                    {...register("contenu", { required: true })}
+                    {...register("vehicule", { required: false })}
                   >
                     {" "}
                     <option value={""}>Selectionner une vehicule</option>
@@ -147,7 +192,7 @@ const EditFicheDep = () => {
                       <option value={elm._id}>{elm.immat}</option>
                     ))}
                   </select>
-                  {errors.contenu && (
+                  {errors.vehicule && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>

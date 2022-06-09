@@ -1,8 +1,8 @@
-import { deleteApi, getApi, postApi } from "../../utils/apiHelpers";
+import { deleteApi, getApi, postApi, updateApi } from "../../utils/apiHelpers";
 import { GET_MISSION_LIST, GET_MISSION_LIST_SUCCESS } from "./actionTypes";
 import { getUsersApi } from "./user.actions";
 import { getVehiculeApi } from "./vehicule.actions";
-
+import { showNotification } from "@mantine/notifications";
 const getAllMissions = () => {
   return {
     type: GET_MISSION_LIST,
@@ -39,7 +39,23 @@ export const AddMissionApi = (data) => async (dispatch) => {
       },
     });
     if (result) {
-      dispatch(getMissionApi());
+      if (result) {
+        dispatch(getMissionApi());
+        dispatch(getUsersApi());
+        dispatch(getVehiculeApi());
+        showNotification({
+          title:"Success",
+          message:"Mission ajoutée avec succès ",
+          color : "green",
+        });
+      } else{
+          showNotification({
+            title:"erreur",
+            message:"Une erreure c'est produite  ",
+            color : "red",
+          });
+      }
+      
     }
   } catch (error) {}
 };
@@ -48,6 +64,61 @@ export const deleteMissionApi = (id) => async (dispatch) => {
     let token = localStorage.getItem("token");
 
     let result = await deleteApi("mission/delete/" + id, {
+      headers: {
+        "access-token": token,
+      },
+    });
+    if (result) {
+      dispatch(getMissionApi());
+      dispatch(getUsersApi());
+      dispatch(getVehiculeApi());
+      showNotification({
+        title:"Success",
+        message:"Mission supprimée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
+    }
+    
+  } catch (error) {}
+};
+
+export const updateMission = (data, id) => async (dispatch) => {
+  try {
+    let token = localStorage.getItem("token");
+
+    let result = await updateApi("mission/edit/" + id, data, {
+      headers: {
+        "access-token": token,
+      },
+    });
+    if (result) {
+      dispatch(getMissionApi());
+      showNotification({
+        title:"Success",
+        message:"Mission modifiée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
+    
+    }
+  } catch (error) {}
+};
+export const finishMission = (data, id) => async (dispatch) => {
+  try {
+    let token = localStorage.getItem("token");
+
+    let result = await updateApi("mission/terminate/" + id, data, {
       headers: {
         "access-token": token,
       },

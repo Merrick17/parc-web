@@ -32,13 +32,12 @@ const EditVehicule = () => {
       setValue("maxWeight", selectedVehicule.maxWeight);
       setValue("dispo", selectedVehicule.dispo);
       setValue("doorNumber", selectedVehicule.doorNumber);
-      setValue("nbTires", selectedVehicule.nbTires);
+      setValue("nbrTires", selectedVehicule.nbrTires);
       setValue("typeVehicule", selectedVehicule.typeVehicule);
-    
     }
   };
   const onSubmit = (data) => {
-    dispatch(updateVehiculeApi(params.immat, data));
+    dispatch(updateVehiculeApi(params.id, data));
     navigate(-1);
   };
   useEffect(() => {
@@ -189,9 +188,9 @@ const EditVehicule = () => {
                     className="form-control"
                     id="exampleInputEmail1"
                     placeholder="Nombre des roues "
-                    {...register("nbTires", { required: true })}
+                    {...register("nbrTires", { required: true })}
                   />{" "}
-                  {errors.nbTires && (
+                  {errors.nbrTires && (
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
@@ -212,8 +211,7 @@ const EditVehicule = () => {
                     <span className="text-danger p-2">Champ obligatoire</span>
                   )}
                 </div>
-
-                </div> 
+              </div>
               {/* /.card-body */}
               <div className="card-footer">
                 <button type="submit" className="btn btn-primary mx-3">
