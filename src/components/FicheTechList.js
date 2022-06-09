@@ -37,7 +37,7 @@ const FicheTechList = () => {
       <section className="content">
         <div className="card">
           <div className="card-header">
-            <h3 className="card-title">fiche contrôle technique</h3>
+            <h3 className="card-title">Liste fiche contrôle technique</h3>
             <div className="card-tools">
               {" "}
               <Link

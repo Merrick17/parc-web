@@ -1,6 +1,7 @@
 import { deleteApi, getApi, postApi, updateApi} from "../../utils/apiHelpers";
 import { GET_FICHETECH_LIST, GET_FICHETECH_LIST_SUCCESS} from "./actionTypes";
 //import Swal from 'sweetalert2'
+import { showNotification } from "@mantine/notifications";
 const getAllFicheTech = () => {
   return {
     type: GET_FICHETECH_LIST,
@@ -32,7 +33,19 @@ export const AddFicheTechApi = (data) => async (dispatch) => {
     let result = await postApi("ficheTech/add", data);
     if (result) {
       dispatch(getFicheTechsApi());
-    }
+      showNotification({
+        title:"Success",
+        message:"Fiche Technique  ajoutée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
+      }
+    
   } catch (error) {}
 };
 export const updateFicheTechApi = (id, data) => async (dispatch) => {
@@ -46,6 +59,17 @@ export const updateFicheTechApi = (id, data) => async (dispatch) => {
     let result = await updateApi("ficheTech/edit/" + id, data, config);
     if (result) {
       dispatch(getFicheTechsApi());
+      showNotification({
+        title:"Success",
+        message:"Fiche Technique  modifiée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
     }
   } catch (error) {}
 };
@@ -60,6 +84,17 @@ export const deleteFicheTechApi = (id) => async (dispatch) => {
     let result = await deleteApi(`ficheTech/delete/${id}`, config);
     if (result) {
       dispatch(getFicheTechsApi());
+      showNotification({
+        title:"Success",
+        message:"Fiche Technique supprimée avec succès ",
+        color : "green",
+      });
+    } else{
+        showNotification({
+          title:"erreur",
+          message:"Une erreure c'est produite  ",
+          color : "red",
+        });
     }
   } catch (error) {}
 };

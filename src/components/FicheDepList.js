@@ -29,6 +29,18 @@ const FicheDepList = () => {
       }
     });
   };
+  const displayPlafond = (type) => {
+    switch (type) {
+      case 0:
+        return "Sous Plafond";
+      case 1:
+        return "Plafond";
+      case 2:
+        return "Sur Plafond";
+      default:
+        return 0;
+    }
+  };
   return (
     <div>
       <section className="content-header"></section>
@@ -60,6 +72,7 @@ const FicheDepList = () => {
                   <th className="text-center">Reparation</th>
                   <th className="text-center">Coût d'assurance</th>
                   <th style={{ width: "30%" }}>Carburant</th>
+                  <th style={{ width: "30%" }}>Plafond</th>
                 </tr>
               </thead>
               <tbody>
@@ -73,7 +86,9 @@ const FicheDepList = () => {
                     <td>{elm.reparation}</td>
                     <td>{elm.coutAssurance}</td>
                     <td>{elm.carburant}</td>
-
+                    <td>
+                      {elm.typePlafond && displayPlafond(elm.typePlafond)}
+                    </td>
                     <td
                       className="project-actions text-right"
                       style={{

@@ -44,7 +44,7 @@ const Home = () => {
         </div>
       </header>
       {/* About section*/}
-      <section id="about">
+      <section id="about" className="landing_section">
         <div className="container px-4">
           <div className="row gx-4 justify-content-center">
             <div className="col-lg-8">
@@ -81,7 +81,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="bg-light" id="contact">
+      <section className="bg-light landing_section" id="contact">
         <div className="container px-4">
           <div className="row gx-4 justify-content-center">
             <div className="col-lg-8">
